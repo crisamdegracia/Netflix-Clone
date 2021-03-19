@@ -1,0 +1,39 @@
+f2v5 - Creating the users table
+1. we create database names
+	- id, firtname, lastname, username, email, password, 
+	- signUpDate - DATETIME, CURRENT_TIME
+	- isSubscribe - TINYINT - 1 or 0    |  true or false
+		- As defined : 0 - zero meaning they are not signed up
+----------------------------------------------------------------------------
+f3v15 - 015 Sanitising 
+
+0. we called it in register.php
+1.  class FormSanitizer {
+
+    public static function sanitizeFormString($inputText) {
+        $inputText = strip_tags($inputText); // Remove all the HTML tags.
+        $inputText = str_replace(" ", "", $inputText); // Removing all spaces.
+        // $inputText = trim($inputText) Remove all spaces after and before the text, but keep all the spaces inside.
+        $inputText = strtolower($inputText);
+        $inputText = ucfirst($inputText); // ucfirst() function converts the first character of a string to uppercase. Related functions: 
+        return $inputText;
+    }
+
+    public static function sanitizeFormUsername($inputText) {
+        $inputText = strip_tags($inputText); // Remove all the HTML tags.
+        $inputText = str_replace(" ", "", $inputText); // Removing all spaces.
+        return $inputText;
+    }
+
+    public static function sanitizeFormPassword($inputText) {
+        $inputText = strip_tags($inputText); // Remove all the HTML tags.
+        return $inputText;
+    }
+
+    public static function sanitizeFormEmail($inputText) {
+        $inputText = strip_tags($inputText); // Remove all the HTML tags.
+        $inputText = str_replace(" ", "", $inputText); // Removing all spaces.
+        return $inputText;
+    }
+
+}
