@@ -1,8 +1,11 @@
 <?php
 
 require_once('includes/config.php');
-require_once('includes/classes/Account.php');
 require_once('includes/classes/FormSanitizer.php');
+require_once('includes/classes/Constant.php');
+require_once('includes/classes/Account.php');
+
+$account = new Account($con);
 
 if (isset($_POST["submitButton"])) {
 	$firstName = FormSanitizer::sanitizeFormString($_POST["firstName"]);
@@ -13,11 +16,14 @@ if (isset($_POST["submitButton"])) {
 	$password = FormSanitizer::sanitizeFormPassword($_POST["password"]);
 	$password2 = FormSanitizer::sanitizeFormPassword($_POST["password2"]);
 
-	$success = $account->register($firstName, $lastName, $username, $email, $email2, $password, $password2);
-	if ($success) {
-		$_SESSION["userLoggedIn"] = $username;
-		header("Location: index.php");
-	}
+	//it will return true or false
+	// $success = $account->register($firstName, $lastName, $username, $email, $email2, $password, $password2);
+	// if ($success) {
+	// 	$_SESSION["userLoggedIn"] = $username;
+	// 	header("Location: index.php");
+	// }
+
+	$account->validateFirstName($firstName);
 }
 
 ?>
@@ -48,10 +54,12 @@ if (isset($_POST["submitButton"])) {
 			</div>
 
 			<form method="POST">
-
+			<?php echo $account->getError(Constants::$firstNameCharacters); ?>
+			
 				<!-- <input type="text" name="firstName" placeholder="First Name" value="<?php /* getInputValue("firstName"); */ ?>" required> -->
 				<input type="text" name="firstName" placeholder="First Name" required>
 
+			<?php echo $account->getError(Constants::$lastNameCharacters); ?>
 				<!-- <input type="text" name="lastName" placeholder="Last Name" value="<?php /* getInputValue("lastName"); */ ?>" required> -->
 				<input type="text" name="lastName" placeholder="Last Name" value="" required>
 

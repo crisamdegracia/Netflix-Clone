@@ -120,3 +120,24 @@ f3v21 - Validating the first name
 1.  private $errorArray = array();  - we create an empty array to store the erros
 2.  array_push($this->errorArray, Constants::$firstNameCharacters);
         - array push daw. ung 2nd args is the value we set or we push
+----------------------------------------------------------------------------
+f3v22 - Displaying error 
+
+1. create a new on register.php para macall natin sya sa pinaka page
+        $account = new Account($con);
+2. sa validateFirstName ichechek dun kung <2 or >25 . if yes mag push ung error dun sa error_array
+         $account->validateFirstName($firstName);
+3. so meron ng laman ung error_array, kaya mag a-output na sa register.php ung error kung true ung condition sa taas ok?
+    echo $account->getError();
+----------------------------------------------------------------------------
+f3v23 - Using Constatnts for our error messages
+1. ung Constans::$firstNameCharacters pala dito is classes lang din. aha!
+     array_push($this->errorArray, Constants::$firstNameCharacters);
+2. we can also reuse that in the register.php error. AWesome!
+----------------------------------------------------------------------------
+f3v24 - Validating the last name 
+1. we create public function register();
+2. to be called in register.php
+3. we have change public to private for the likes of function validateFirstName($fn)
+    - meaning these classes are only allowed to be called inside their classes
+    - so sa loob ng register() dun sila pinag tatawag kaya pwedeng iprivate
