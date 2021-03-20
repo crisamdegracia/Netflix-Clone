@@ -8,7 +8,7 @@ class FormSanitizer {
         $inputText = str_replace(" ", "", $inputText); // Removing all spaces.
         // $inputText = trim($inputText) Remove all spaces after and before the text, but keep all the spaces inside.
         $inputText = strtolower($inputText);
-        $inputText = ucfirst($inputText); // ucfirst() function converts the first character of a string to uppercase. Related functions: 
+        $inputText = ucfirst($inputText); // ucfirst()  converts the first character of a string to uppercase. 
         return $inputText;
     }
 

@@ -1,3 +1,22 @@
+Meaningfull 
+1. create static class if the function or the class doesnt need to refer itself like 
+    an instance 
+2. :: colon - it represents a static function or property
+
+3. ob_start();
+            // Turns on output buffering. it will leave a comment there 
+            // basically daw it awaits untill all of the period executed before outputting it to the page
+            // parang sa ES6 - ung await ata un.
+            // wait daw muna all the PHP code has been executed before output
+4. session_start();
+             // We are able to use sessions.
+             // even after the page been closed -
+             // by default until the browser is closed
+
+ 5. Setting the default time zone.  
+             - date_default_timezone_set("Europe/Budapest"); 
+
+----------------------------------------------------------------------------
 f2v5 - Creating the users table
 1. we create database names
 	- id, firtname, lastname, username, email, password, 
@@ -5,7 +24,7 @@ f2v5 - Creating the users table
 	- isSubscribe - TINYINT - 1 or 0    |  true or false
 		- As defined : 0 - zero meaning they are not signed up
 ----------------------------------------------------------------------------
-f3v15 - 015 Sanitising 
+f3v15 - 017 Sanitising 
 
 0. we called it in register.php
 1.  class FormSanitizer {
@@ -37,3 +56,67 @@ f3v15 - 015 Sanitising
     }
 
 }
+
+if (isset($_POST["submitButton"])) {
+	$firstName = FormSanitizer::sanitizeFormString($_POST["firstName"]);
+	$lastName = FormSanitizer::sanitizeFormString($_POST["lastName"]);
+	$username = FormSanitizer::sanitizeFormUsername($_POST["username"]);
+	$email = FormSanitizer::sanitizeFormEmail($_POST["email"]);
+	$email2 = FormSanitizer::sanitizeFormEmail($_POST["email2"]);
+	$password = FormSanitizer::sanitizeFormPassword($_POST["password"]);
+	$password2 = FormSanitizer::sanitizeFormPassword($_POST["password2"]);
+----------------------------------------------------------------------------
+f16 - Form Sanitizer Class
+
+1. 	// static means - dont need to create an instance of the class in order to call it
+    example of - instance - 
+    $sf = new FormSanitizer
+        - ung name ng class
+2. 
+
+----------------------------------------------------------------------------
+f3v18 - config file
+
+3. ob_start();
+            // Turns on output buffering. it will leave a comment there 
+            // basically daw it awaits untill all of the period executed before outputting it to the page
+            // parang sa ES6 - ung await ata un.
+            // wait daw muna all the PHP code has been executed before output
+4. session_start();
+             // We are able to use sessions.
+             // even after the page been closed -
+             // by default until the browser is closed
+
+ 5. Setting the default time zone.  
+             - date_default_timezone_set("Europe/Budapest"); 
+----------------------------------------------------------------------------
+f3v19 - Connecting to the database -  
+
+
+try {
+    $con = new PDO("mysql:dbname=reeceflix;host=localhost", "root", "");
+        // connect to the database
+    $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+		// set the error reporting 
+		// PDO :: ATTR_ERRMODE - we are accesing a static property on the PDO object called attribute error mode
+		//						- we are setting -
+		// PDO::ERRMODE_WARNING - we are setting the value of PDO :: ATTR_ERRMODE
+		// ERRMODE_WARNING - means it can help any errors for us and maybe continue the rest of the script depending on what the code is
+	} catch (PDOException $e) {
+    exit("Connection failed: " . $e->getMessage());
+}
+----------------------------------------------------------------------------
+f3v20 - Creating the Account class
+
+1. parang ES6 module. 
+ private $con;
+ public function __construct($con)
+	{
+		$this->con = $con;
+	}
+2. tapos we now call it to the register.php
+----------------------------------------------------------------------------
+f3v21 - Validating the first name
+1.  private $errorArray = array();  - we create an empty array to store the erros
+2.  array_push($this->errorArray, Constants::$firstNameCharacters);
+        - array push daw. ung 2nd args is the value we set or we push
