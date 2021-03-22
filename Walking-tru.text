@@ -137,7 +137,44 @@ f3v23 - Using Constatnts for our error messages
 ----------------------------------------------------------------------------
 f3v24 - Validating the last name 
 1. we create public function register();
-2. to be called in register.php
+2. to be called in register.php and to be use in register.php 
+    - ginawa din natin private na ung mga validation(), so c register lang ang makakacall sa mga un.
 3. we have change public to private for the likes of function validateFirstName($fn)
     - meaning these classes are only allowed to be called inside their classes
     - so sa loob ng register() dun sila pinag tatawag kaya pwedeng iprivate
+4. it will handle all the validation
+    - register($fn, $ln, $un, $em, $em2, $pw, $pw2) 
+5. eto ung mga validation
+   $this->validateFirstName($fn);
+   $this->validateLastName($ln);
+   $this->validateUsername($un);
+   $this->validateEmails($em, $em2);
+   $this->validatePasswords($pw, $pw2);
+----------------------------------------------------------------------------
+f3v25 - validating username 
+
+1. this how we do query in the database    
+    - ung username=:un - we need to bindValue muna para tumamaung value
+        $query = $this->con->prepare("SELECT * FROM users WHERE username=:un");
+        $query->bindValue(":un", $un);
+    - parang eto ung sa confirm() sa helper class ni Diaz
+        $query->execute();
+
+----------------------------------------------------------------------------
+f3v26 - Validating the email
+
+1.  how to filter email
+  if (!filter_var($em, FILTER_VALIDATE_EMAIL)) {
+            array_push($this->errorArray, Constants::$emailInvalid);
+            return;
+        }
+
+2. tatlo ung error message ng email wow . sa register.php
+<?php echo $account->getError(Constants::$emailsDontMatch); ?>
+<?php echo $account->getError(Constants::$emailInvalid); ?>
+<?php echo $account->getError(Constants::$emailTaken); ?>    
+----------------------------------------------------------------------------
+f3v27 - validate passwords
+1. same thing we did to username etc. becoz we already sanitized it.
+----------------------------------------------------------------------------
+f3v28 - Styling the error message
