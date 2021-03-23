@@ -27,10 +27,10 @@ if (isset($_POST["submitButton"])) {
 
 }
 
-function getInputValue() { 
+function getInputValue($name) { 
 
-    if(isset($_POST['name'])){
-      echo $_POST['name'];
+    if(isset($_POST[$name])){
+      echo $_POST[$name];
     }
  }
 
@@ -56,7 +56,7 @@ function getInputValue() {
         </div>
         <form method="POST">
         <?php echo $account->getError(Constants::$loginFailed); ?>
-        <input type="text" name="username" placeholder="Username" value='<?php getInputValue("username"); ?>' required>
+        <input type="text" name="username" placeholder="Username" value='<?php echo getInputValue("username"); ?>' required>
         <input type="password" name="password" placeholder="Password" required>
         <input type="submit" name="submitButton" value="SUBMIT">
         </form>

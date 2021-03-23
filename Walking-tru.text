@@ -230,4 +230,24 @@ f3v34 - Storing the session
 ----------------------------------------------------------------------------
 f3v35 - Remembering the last entered values
 1. we create getInputValue() in login.php - 
+2. ang catch neto, kapag wrong ung username or password, mag stay ung value ng username
+    function getInputValue($name) { 
 
+    if(isset($_POST[$name])){
+      echo $_POST[$name];
+    }
+ }
+----------------------------------------------------------------------------
+f3v36 - register.php remember inputs when incorrect attemps
+
+1. same sa 35 - 
+    if(isset($_POST[$name])){
+      echo $_POST[$name];
+    }
+ }
+ ----------------------------------------------------------------------------
+ f4v37 - Setting our table
+ 1. imported to the database
+    categorie.sql
+    entities.sql
+    videos.sql

@@ -30,10 +30,10 @@ if (isset($_POST["submitButton"])) {
 	//f3v24 - we create register() in Account.php it will return true or false
 	//OLD $account->register($firstName, $lastName, $username, $email, $email2, $password, $password2);
 }
-function getInputValue() { 
+function getInputValue($name) { 
 
-    if(isset($_POST['name'])){
-      echo $_POST['name'];
+    if(isset($_POST[$name])){
+      echo $_POST[$name];
     }
  }
 ?>
