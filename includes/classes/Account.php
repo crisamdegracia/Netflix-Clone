@@ -13,25 +13,72 @@ class Account
 
     public function register($fn, $ln, $un, $em, $em2, $pw, $pw2)
     {
+        // after all these are called 2 things gonna happen
+        // 1. error array are empty, no error happend
+        // 2. if no error it will write it into the database
         $this->validateFirstName($fn);
         $this->validateLastName($ln);
         $this->validateUsername($un);
         $this->validateEmails($em, $em2);
         $this->validatePasswords($pw, $pw2);
 
-        /*
-            To debug:
-            $query->execute();
-            var_dump($query->errorInfo());
-        */
 
+
+
+        //if there is no error from above, we insert everything into the database
         if (empty($this->errorArray)) {
             return $this->insertUserDetails($fn, $ln, $un, $em, $pw);
         }
 
+        // To debug:
+        //   $query->execute();
+        //   var_dump($query->errorInfo());
+
+
+        // it it doesnt match daw ung if  empty($this->errorArray) it will return false
+        // but when the above if is successful it wont go on this part
         return false;
     }
 
+    public function login($un, $pw) {
+        $pw = hash("sha512", $pw);
+        
+        $query = $this->con->prepare("SELECT * FROM users WHERE username=:un AND password=:pw");
+
+        $query->bindValue(":un", $un);
+        $query->bindValue(":pw", $pw);
+
+        $query->execute();
+
+        if ($query->rowCount() == 1) {
+            return true;
+        }        
+        
+        array_push($this->errorArray, Constants::$loginFailed);
+        return false;
+    }
+
+
+    private function insertUserDetails($fn, $ln, $un, $em, $pw)
+    {
+        // encrypting the password
+        $pw = hash("sha512", $pw);
+
+        $query = $this->con->prepare(
+            "INSERT INTO users (firstName, lastName, username, email, password) 
+            VALUES (:fn, :ln, :un, :em, :pw)"
+        );
+
+        $query->bindValue(":fn", $fn);
+        $query->bindValue(":ln", $ln);
+        $query->bindValue(":un", $un);
+        $query->bindValue(":em", $em);
+        $query->bindValue(":pw", $pw);
+
+
+
+        return $query->execute();
+    }
 
     //if the firstname is < | > length of 2 and 20, then display an error
     private  function validateFirstName($fn)
@@ -50,7 +97,8 @@ class Account
     }
 
     // d2 ichechek din natin kung existing na ung new user
-    private function validateUsername($un) {
+    private function validateUsername($un)
+    {
         if (strlen($un) < 2 || strlen($un) > 25) {
             array_push($this->errorArray, Constants::$usernameCharacters);
 
@@ -70,7 +118,8 @@ class Account
     }
 
 
-    private function validateEmails($em, $em2) {
+    private function validateEmails($em, $em2)
+    {
         if ($em != $em2) {
             array_push($this->errorArray, Constants::$emailsDontMatch);
             return;
@@ -92,7 +141,8 @@ class Account
 
 
 
-    private function validatePasswords($pw, $pw2) {
+    private function validatePasswords($pw, $pw2)
+    {
         if ($pw != $pw2) {
             array_push($this->errorArray, Constants::$passwordsDontMatch);
             return;

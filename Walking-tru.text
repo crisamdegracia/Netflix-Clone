@@ -178,3 +178,56 @@ f3v27 - validate passwords
 1. same thing we did to username etc. becoz we already sanitized it.
 ----------------------------------------------------------------------------
 f3v28 - Styling the error message
+----------------------------------------------------------------------------
+f3v30 - he explains all the return. on account.php in register() and insertUserDetails()
+
+1. if there is no error from registering in the input fields, then we will proceed here
+    - and write to the database
+    - if (empty($this->errorArray)) {
+        return $this->insertUserDetails($fn, $ln, $un, $em, $pw);
+        }
+
+2. if #1, is failed. the register() will return false
+    return false;
+
+
+3. 
+    return $query->execute();
+
+
+4. so after the successful  register. it wil redirect to the index.php
+    
+    $success = $account->register($firstName, $lastName, $username, $email, $email2, $password, $password2);
+	if ($success) {
+		$_SESSION["userLoggedIn"] = $username;
+		header("Location: index.php");
+	}
+----------------------------------------------------------------------------
+f3v31 - How to debug MySQL
+
+   // To debug:
+   //   $query->execute();
+   //   var_dump($query->errorInfo());
+----------------------------------------------------------------------------
+f3v32 - Writing login function
+1. kinopy paste ko lang yeah.
+2. dont forget to put this on the register upper 
+
+
+require_once('./includes/config.php');
+require_once('./includes/classes/FormSanitizer.php');
+require_once('./includes/classes/Account.php');
+require_once('./includes/classes/Constant.php');
+
+$account = new Account($con);
+----------------------------------------------------------------------------
+f3v33 - try login page
+1. nka login na tayo!
+----------------------------------------------------------------------------
+f3v34 - Storing the session 
+1. inativate lang natin ung 
+    $_SESSION["userLoggedIn"] = $username; sa register.php
+----------------------------------------------------------------------------
+f3v35 - Remembering the last entered values
+1. we create getInputValue() in login.php - 
+

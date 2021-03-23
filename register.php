@@ -18,17 +18,24 @@ if (isset($_POST["submitButton"])) {
 	$password2 = FormSanitizer::sanitizeFormPassword($_POST["password2"]);
 
 	//it will return true or false
-	// $success = $account->register($firstName, $lastName, $username, $email, $email2, $password, $password2);
-	// if ($success) {
-		// 	$_SESSION["userLoggedIn"] = $username;
-		// 	header("Location: index.php");
-		// }
-		
+	$success = $account->register($firstName, $lastName, $username, $email, $email2, $password, $password2);
+	
+	//if the register has no error
+	if ($success) {
+		$_SESSION["userLoggedIn"] = $username;
+		header("Location: index.php");
+	}
+
 
 	//f3v24 - we create register() in Account.php it will return true or false
-	$account->register($firstName, $lastName, $username, $email, $email2, $password, $password2);
+	//OLD $account->register($firstName, $lastName, $username, $email, $email2, $password, $password2);
 }
+function getInputValue() { 
 
+    if(isset($_POST['name'])){
+      echo $_POST['name'];
+    }
+ }
 ?>
 
 
@@ -60,29 +67,24 @@ if (isset($_POST["submitButton"])) {
 
 
 
-			<?php echo $account->getError(Constants::$firstNameCharacters); ?>
-				<!-- <input type="text" name="firstName" placeholder="First Name" value="<?php /* getInputValue("firstName"); */ ?>" required> -->
-				<input type="text" name="firstName" placeholder="First Name" required>
+				<?php echo $account->getError(Constants::$firstNameCharacters); ?>
+				<input type="text" name="firstName" placeholder="First Name" value="<?php getInputValue("firstName"); ?>" required>
 
-			<?php echo $account->getError(Constants::$lastNameCharacters); ?>
-				<!-- <input type="text" name="lastName" placeholder="Last Name" value="<?php /* getInputValue("lastName"); */ ?>" required> -->
-				<input type="text" name="lastName" placeholder="Last Name" value="" required>
+				<?php echo $account->getError(Constants::$lastNameCharacters); ?>
+				<input type="text" name="lastName" placeholder="Last Name" value="<?php getInputValue("lastName"); ?>" required>
 
-			<?php echo $account->getError(Constants::$usernameCharacters); ?>
-			<?php echo $account->getError(Constants::$usernameTaken); ?>
-				<!-- <input type="text" name="username" placeholder="Username" value="<?php /* getInputValue("username"); */ ?>" required> -->
-				<input type="text" name="username" placeholder="Username" value="" required>
+				<?php echo $account->getError(Constants::$usernameCharacters); ?>
+				<?php echo $account->getError(Constants::$usernameTaken); ?>
+				<input type="text" name="username" placeholder="Username" value="<?php getInputValue("username"); ?>" required>
 
-			<?php echo $account->getError(Constants::$emailsDontMatch); ?>
-			<?php echo $account->getError(Constants::$emailInvalid); ?>
-			<?php echo $account->getError(Constants::$emailTaken); ?>
-				<!-- <input type="email" name="email" placeholder="Email" value="<?php /* getInputValue("email"); */ ?>" required> -->
-				<input type="email" name="email" placeholder="Email" value="" required>
-				<!-- <input type="email" name="email2" placeholder="Confirm email" value="<?php /* getInputValue("email2") */; ?>" required> -->
-				<input type="email" name="email2" placeholder="Confirm email" value="" required>
+				<?php echo $account->getError(Constants::$emailsDontMatch); ?>
+				<?php echo $account->getError(Constants::$emailInvalid); ?>
+				<?php echo $account->getError(Constants::$emailTaken); ?>
+				<input type="email" name="email" placeholder="Email" value="<?php getInputValue("email"); ?>" required>
+				<input type="email" name="email2" placeholder="Confirm email" value="<?php getInputValue("email2"); ?>" required>
 
-			<?php echo $account->getError(Constants::$passwordsDontMatch); ?>
-			<?php echo $account->getError(Constants::$passwordLength); ?>
+				<?php echo $account->getError(Constants::$passwordsDontMatch); ?>
+				<?php echo $account->getError(Constants::$passwordLength); ?>
 				<input type="password" name="password" placeholder="Password" required>
 				<input type="password" name="password2" placeholder="Confirm password" required>
 				<input type="submit" name="submitButton" value="SUBMIT">
