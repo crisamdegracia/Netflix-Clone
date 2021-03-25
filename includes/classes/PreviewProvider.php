@@ -9,9 +9,7 @@ class PreviewProvider {
         $this->username = $username;
     }
 
-    public function testFunction(){
-        echo "wanthousand";
-    }
+  
     // public function createCategoryPreviewVideo($categoryId) {
     //     $entitiesArray = EntityProvider::getEntities($this->con, $categoryId, 1);
 
@@ -42,23 +40,28 @@ class PreviewProvider {
     //     return $this->createPreviewVideo($entitiesArray[0]);
     // }
 
+
     public function createPreviewVideo($entity) {
+
+        // when the entity is  null, we will create
        if ($entity == null) {
            $entity = $this->getRandomEntity();
+           
        }
 
+       //functions are in entity.php 
        $id = $entity->getId();
        $name = $entity->getName();
        $preview = $entity->getPreview();
        $thumbnail = $entity->getThumbnail();
-
-       $videoId = VideoProvider::getEntityVideoForUser($this->con, $id, $this->username);
+       echo $name;
+    // //    $videoId = VideoProvider::getEntityVideoForUser($this->con, $id, $this->username);
        
-       $video = new Video($this->con, $videoId);
-       $inProgress = $video->isInProgress($this->username);
-       $playButtonText = $inProgress ? "Continue watching" : "Play";  
-       $seasonEpisode = $video->getSeasonAndEpisode();
-       $subHeading = $video->isMovie() ? "" : "<h4>$seasonEpisode</h4>";
+    //    $video = new Video($this->con, $videoId);
+    //    $inProgress = $video->isInProgress($this->username);
+    //    $playButtonText = $inProgress ? "Continue watching" : "Play";  
+    //    $seasonEpisode = $video->getSeasonAndEpisode();
+    //    $subHeading = $video->isMovie() ? "" : "<h4>$seasonEpisode</h4>";
 
        return "<div class='previewContainer'>
                     <img src='$thumbnail' class='previewImage' hidden>
@@ -81,17 +84,17 @@ class PreviewProvider {
                 </div>";
     }
 
-    public function createEntityPreviewSquare($entity) {
-        $id = $entity->getid();
-        $thumbnail = $entity->getThumbnail();
-        $name = $entity->getName();
+    // public function createEntityPreviewSquare($entity) {
+    //     $id = $entity->getid();
+    //     $thumbnail = $entity->getThumbnail();
+    //     $name = $entity->getName();
 
-        return "<a href='entity.php?id=$id'>
-                    <div class='previewContainer small'>
-                        <img src='$thumbnail' title='$name'>
-                    </div>
-                </a>";
-    }
+    //     return "<a href='entity.php?id=$id'>
+    //                 <div class='previewContainer small'>
+    //                     <img src='$thumbnail' title='$name'>
+    //                 </div>
+    //             </a>";
+    // }
 
     private function getRandomEntity() {
         $query = $this->con->prepare("SELECT * FROM entities ORDER BY RAND() LIMIT 1");
@@ -100,11 +103,11 @@ class PreviewProvider {
         // this is how we get data from a single query in PHP
         // get the data and store it in assiotive_array -- like a key value pair
         $row = $query->fetch(PDO::FETCH_ASSOC);
-    echo $row['name'];
-        // return new Entity($this->con, $row);
+
+        
+        return new Entity($this->con, $row);
 
         // $entity = EntityProvider::getEntities($this->con, null, 1);
         // return $entity[0];
     }
 }
-?>

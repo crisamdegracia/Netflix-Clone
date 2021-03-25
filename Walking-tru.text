@@ -277,3 +277,13 @@ f4v41 - Creating the preview provider class
 4.  // this is how we get data from a single query in PHP
     // get the data and store it in assiotive_array -- like a key value pair
         $row = $query->fetch(PDO::FETCH_ASSOC);
+----------------------------------------------------------------------------
+f4v43 - Entity getter function
+
+1. we did these. in previewProvider.php
+       //functions are in entity.php 
+       $id = $entity->getId();
+       $name = $entity->getName();
+       $preview = $entity->getPreview();
+       $thumbnail = $entity->getThumbnail();
+2. so when in the index.php, once we call the PreviewProvider - when can use the function or methods of it.
