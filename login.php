@@ -6,19 +6,20 @@ require_once('./includes/classes/FormSanitizer.php');
 require_once('./includes/classes/Account.php');
 require_once('./includes/classes/Constant.php');
 
-$account = new Account($con);
 
+$account = new Account($con);
 if (isset($_POST["submitButton"])) {
 	$username = FormSanitizer::sanitizeFormUsername($_POST["username"]);
 	$password = FormSanitizer::sanitizeFormPassword($_POST["password"]);
 	//it will return true or false
 	$success = $account->login($username, $password);
 	
-	//if the register has no error
+	//if the register has no error, then we create userLoggedIn 
 	if ($success) {
 		$_SESSION["userLoggedIn"] = $username;
 		header("Location: index.php");
-	}
+
+    }
 
 
 	//f3v24 - we create register() in Account.php it will return true or false
@@ -56,6 +57,7 @@ function getInputValue($name) {
         </div>
         <form method="POST">
         <?php echo $account->getError(Constants::$loginFailed); ?>
+        <?php echo $account->getError(Constants::$loginSuccessful); ?>
         <input type="text" name="username" placeholder="Username" value='<?php echo getInputValue("username"); ?>' required>
         <input type="password" name="password" placeholder="Password" required>
         <input type="submit" name="submitButton" value="SUBMIT">

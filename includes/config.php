@@ -6,7 +6,7 @@ ob_start(); // Turns on output buffering. it will leave a comment there
 session_start(); // We are able to use sessions.
                 // even after the page been closed -
                 // by default until the browser is closed
-session_destroy();
+// session_destroy();
 date_default_timezone_set("Asia/Manila"); // Setting the default time zone.  
 
 try {

@@ -1,11 +1,20 @@
 <?php 
 
 require_once('includes/config.php');
+require_once('includes/classes/PreviewProvider.php');
 
 if (!isset($_SESSION["userLoggedIn"] )) {
 	header("Location: register.php");
 }
 
+//if the login is success in the login.php
+$userLogin = $_SESSION['userLoggedIn'];
+
+$preview = new PreviewProvider($con, $userLogin);
+
+// we are not passing ID 
+//null muna, later it will change
+echo $preview->createPreviewVideo(null);
 
 ?>
 

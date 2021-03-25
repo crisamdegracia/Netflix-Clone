@@ -51,7 +51,9 @@ class Account
         $query->execute();
 
         if ($query->rowCount() == 1) {
+            array_push($this->errorArray, Constants::$loginSuccessful);
             return true;
+
         }        
         
         array_push($this->errorArray, Constants::$loginFailed);

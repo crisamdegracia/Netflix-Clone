@@ -251,3 +251,29 @@ f3v36 - register.php remember inputs when incorrect attemps
     categorie.sql
     entities.sql
     videos.sql
+----------------------------------------------------------------------------
+f4v38 - He just explain about the videos and stuff
+1. kung gusto daw ibang mga thumbnails, change the folder name [thumbnail]
+----------------------------------------------------------------------------
+f4v39 - Explantion tables
+1. categories.sql daw is ung mga rows na screen, 
+    like:
+    action & adventure, Commedies, horror, Dramas
+2. entities.sql naman daw - is ung laman ng kada video o thumbnail
+3. video.sql - if in the future we want to add video
+    - just go to the database and the there
+----------------------------------------------------------------------------
+f4v41 - Creating the preview provider class
+1. create createPreviewVideo($entity)
+2. create getRandomEntity() - it will return entity class
+    ("SELECT * FROM entities ORDER BY RAND() LIMIT 1")
+        - isa lang ung ibbgay, LIMIT 1 
+
+3. sa createPreviewVideo
+    - if there is no given entity, then we will get random entity to show
+    if ($entity == null) {
+           $entity = $this->getRandomEntity();
+       }
+4.  // this is how we get data from a single query in PHP
+    // get the data and store it in assiotive_array -- like a key value pair
+        $row = $query->fetch(PDO::FETCH_ASSOC);
