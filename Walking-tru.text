@@ -238,7 +238,7 @@ f3v35 - Remembering the last entered values
     }
  }
 ----------------------------------------------------------------------------
-f3v36 - register.php remember inputs when incorrect attemps
+ f3v36 - register.php remember inputs when incorrect attemps
 
 1. same sa 35 - 
     if(isset($_POST[$name])){
@@ -277,6 +277,7 @@ f4v41 - Creating the preview provider class
 4.  // this is how we get data from a single query in PHP
     // get the data and store it in assiotive_array -- like a key value pair
         $row = $query->fetch(PDO::FETCH_ASSOC);
+
 ----------------------------------------------------------------------------
 f4v43 - Entity getter function
 
@@ -287,3 +288,61 @@ f4v43 - Entity getter function
        $preview = $entity->getPreview();
        $thumbnail = $entity->getThumbnail();
 2. so when in the index.php, once we call the PreviewProvider - when can use the function or methods of it.
+----------------------------------------------------------------------------
+f4v44 - Showing the preview video -
+1. Deputaness. nag tagal ako dun sa Error! __construct(){} ko kulang lang pala ng 'S' !!
+2. nag gawa lang ng HTML markup para sa video preview. sa previewProvider.php -> createPreviewVideo($entity) 
+
+----------------------------------------------------------------------------
+f4v45 -- gumawa lng ng header para clean code
+----------------------------------------------------------------------------
+f4v46 - 47 -- CSS para sa Preview Overlay
+----------------------------------------------------------------------------
+f4v48 - 49 - 50 - Styling the Preview Buttons
+----------------------------------------------------------------------------
+f4v51 - Muting and unmuting the preview video
+1. nakalagay sa assets/script.js
+2. mute unmute
+    - .prop() - gets the property - so we use muted.
+    - var muted = $(".previewVideo").prop("muted");
+         - what its doing is getting the value of whow ever is the muted
+         - if meron then its true
+    - $(".previewVideo").prop("muted", !muted);
+        - eto ung pinaka toggle script nya .
+
+    function volumeToggle(button) {
+    var muted = $(".previewVideo").prop("muted");
+    $(".previewVideo").prop("muted", !muted);
+
+    $(button).find("i").toggleClass("fa-volume-mute");
+    $(button).find("i").toggleClass("fa-volume-up");
+}
+
+
+3. volumeToggle(this) - ung this daw dito referred from the obect we called on.
+
+<button onclick='volumeToggle(this)'><i class='fas fa-volume-mute'></i></button>
+                      
+4. Amazing its unmuted!
+----------------------------------------------------------------------------
+f4v52 - Changing the icon on muted unmute
+
+  $(button).find("i").toggleClass("fa-volume-mute");
+  $(button).find("i").toggleClass("fa-volume-up");
+----------------------------------------------------------------------------
+f4v53 - Showing the image when the preview has ended  
+        - previewProvider.php | createPreviewVideo($entity) | script.js
+1. onended - property pala yon ng video. so pag ended na we 
+    - we will call previewEnded()
+    - ung ka toggle nya is hiden in the vackground
+ <video autoplay muted class='previewVideo' onended='previewEnded()'>
+ 
+ <img src='$thumbnail' class='previewImage' hidden>
+----------------------------------------------------------------------------
+f5v54 - Adding some style to the page background         
+----------------------------------------------------------------------------
+f5v55 - Creating the category container class
+
+1. we create the class then we add to the header.php
+
+class CategoryContainers 

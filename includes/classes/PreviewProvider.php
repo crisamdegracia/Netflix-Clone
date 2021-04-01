@@ -1,4 +1,6 @@
 <?php 
+// require_once('Entity.php');
+
 class PreviewProvider {
 
     private $con;
@@ -46,16 +48,17 @@ class PreviewProvider {
         // when the entity is  null, we will create
        if ($entity == null) {
            $entity = $this->getRandomEntity();
-           
        }
 
+       // sabi daw, by the time (after ng if sa taas) we will contain na an entity object
+       // so ang gagawin daw natin is to get Id,name,thumbnail, and preview.
        //functions are in entity.php 
        $id = $entity->getId();
        $name = $entity->getName();
        $preview = $entity->getPreview();
        $thumbnail = $entity->getThumbnail();
-       echo $name;
-    // //    $videoId = VideoProvider::getEntityVideoForUser($this->con, $id, $this->username);
+
+    //    $videoId = VideoProvider::getEntityVideoForUser($this->con, $id, $this->username);
        
     //    $video = new Video($this->con, $videoId);
     //    $inProgress = $video->isInProgress($this->username);
@@ -71,15 +74,15 @@ class PreviewProvider {
                     </video>
 
                     <div class='previewOverlay'>
-                        <div class='mainDetails'>
-                            <h3>$name</h3>
-                            $subHeading 
-                            <div class='buttons'>
-                                <button onclick='watchVideo($videoId)'><i class='fas fa-play'></i> $playButtonText</button>
-                                <button onclick='volumeToggle(this)'><i class='fas fa-volume-mute'></i></button>
-                            </div>
+                    <div class='mainDetails'>
+                        <h3>$name</h3>
+                        $subHeading 
+                        <div class='buttons'>
+                            <button onclick='watchVideo($videoId)'><i class='fas fa-play'></i> $playButtonText</button>
+                            <button onclick='volumeToggle(this)'><i class='fas fa-volume-mute'></i></button>
                         </div>
                     </div>
+                </div>
 
                 </div>";
     }
@@ -104,10 +107,14 @@ class PreviewProvider {
         // get the data and store it in assiotive_array -- like a key value pair
         $row = $query->fetch(PDO::FETCH_ASSOC);
 
-        
+
+        //the 2nd parameter is the data we want to use
         return new Entity($this->con, $row);
 
-        // $entity = EntityProvider::getEntities($this->con, null, 1);
+      // $entity = EntityProvider::getEntities($this->con, null, 1);
         // return $entity[0];
     }
+
+    
 }
+  
