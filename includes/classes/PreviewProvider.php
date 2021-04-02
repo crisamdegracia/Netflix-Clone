@@ -76,11 +76,7 @@ class PreviewProvider {
                     <div class='previewOverlay'>
                     <div class='mainDetails'>
                         <h3>$name</h3>
-                        $subHeading 
-                        <div class='buttons'>
-                            <button onclick='watchVideo($videoId)'><i class='fas fa-play'></i> $playButtonText</button>
-                            <button onclick='volumeToggle(this)'><i class='fas fa-volume-mute'></i></button>
-                        </div>
+                      
                     </div>
                 </div>
 

@@ -8,5 +8,9 @@ $preview = new PreviewProvider($con, $userLogin);
 //null muna, later it will change
 echo $preview->createPreviewVideo(null);
 
+
+$containers = new CategoryContainers($con, $userLogin);
+echo $containers->showAllCategories();
+
 require_once('includes/footer.php');
 ?>

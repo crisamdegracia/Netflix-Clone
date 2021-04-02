@@ -343,6 +343,25 @@ f5v54 - Adding some style to the page background
 ----------------------------------------------------------------------------
 f5v55 - Creating the category container class
 
-1. we create the class then we add to the header.php
-
 class CategoryContainers 
+1. we create the class then we add to the header.php
+2. the 1st class showAllCategories() - just check it in CategoryContainers.php
+3.  we successfully showed the categories.
+----------------------------------------------------------------------------
+f5v56 - Showing all Categories 
+1. we create getCategoryHtml() in CategoryContainers.php
+    - ngayon, magagamit na natin sya sa showAllCategories();
+        $html .= $this->getCategoryHtml($row, null, true, true);
+    - after we set the above we now, coding the function -> getCategoryHtml()
+    - 1st we set $categoryId then the title
+
+
+
+
+
+
+  $subHeading 
+                        <div class='buttons'>
+                            <button onclick='watchVideo($videoId)'><i class='fas fa-play'></i> $playButtonText</button>
+                            <button onclick='volumeToggle(this)'><i class='fas fa-volume-mute'></i></button>
+                        </div>
