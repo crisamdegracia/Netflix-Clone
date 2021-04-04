@@ -13,6 +13,7 @@ class CategoryContainers {
         $query = $this->con->prepare("SELECT * FROM categories");
         $query->execute();
 
+        //
         $html = "<div class='previewCategories'>";
 
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
@@ -28,28 +29,33 @@ class CategoryContainers {
     }
 
     
-    // 
+    // from the function word getCategoryHTML
+    //
     private function getCategoryHtml($sqlData, $title, $tvShows, $movies) {
         $categoryId = $sqlData["id"];
         $title = $title == null ? $sqlData["name"] : $title;
 
-        if ($tvShows && $movies) {
-            $entities = EntityProvider::getEntities($this->con, $categoryId, 30);
-        } else if ($tvShows) {
-            $entities = EntityProvider::getTVShowEntities($this->con, $categoryId, 30);
-        } else {
-            $entities = EntityProvider::getMoviesEntities($this->con, $categoryId, 30);
-        }
 
+        if ($tvShows && $movies) {
+            //ung 30 dito is ung limit, na naka set sa EntityProvider.php
+            $entities = EntityProvider::getEntities($this->con, $categoryId, 30);
+        } 
+        // else if ($tvShows) {
+        //     $entities = EntityProvider::getTVShowEntities($this->con, $categoryId, 30);
+        // } else {
+        //     $entities = EntityProvider::getMoviesEntities($this->con, $categoryId, 30);
+        // }
+
+        // if there is no entity, then we want to just return nothing
         if (sizeof($entities) == 0) {
             return;
         }
 
         $entitiesHtml = "";
         $previewProvider = new PreviewProvider($this->con, $this->username);
-        foreach ($entities as $entity) {
-            $entitiesHtml .= $previewProvider->createEntityPreviewSquare($entity);
-        }
+        // foreach ($entities as $entity) {
+        //     $entitiesHtml .= $previewProvider->createEntityPreviewSquare($entity);
+        // }
 
         return "<div class='category'>
                     <a href='category.php?id=$categoryId'>

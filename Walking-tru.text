@@ -354,9 +354,21 @@ f5v56 - Showing all Categories
         $html .= $this->getCategoryHtml($row, null, true, true);
     - after we set the above we now, coding the function -> getCategoryHtml()
     - 1st we set $categoryId then the title
+    - 
+----------------------------------------------------------------------------
+f5v57 - Creating entity provider class | EntityProvider.php
 
 
-
+1. nag create tayo ng method,
+    public static function getEntities($con, $categoryId, $limit)
+2. sinet natin ung value sa CategoryContainers.php 
+    $entities = EntityProvider::getEntities($this->con, $categoryId, 30);
+3. so ganon pala yon noh? 
+4.       // PDO::PARAM_INT - para to dun sa $limit,
+        // kasi baka daw mag kaproblema when binding integers
+        $query->bindValue(":limit", $limit, PDO::PARAM_INT);
+5. nag create ng  private function getRandomEntity() sa PreviewProvider.php
+    - 
 
 
 

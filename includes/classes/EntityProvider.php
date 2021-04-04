@@ -1,6 +1,8 @@
 <?php 
 class EntityProvider {
 
+
+    //
     public static function getEntities($con, $categoryId, $limit) {
         $sql = "SELECT * FROM entities ";
 
@@ -14,12 +16,20 @@ class EntityProvider {
         if ($categoryId != null) {
             $query->bindValue(":categoryId", $categoryId);
         }
+
+        // PDO::PARAM_INT - para to dun sa $limit,
+        // kasi baka daw mag kaproblema when binding integers
         $query->bindValue(":limit", $limit, PDO::PARAM_INT);
         $query->execute();
+
+
+
 
         $result = array();
         
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+
+            //$result = parang push() - gamitin daw ung next available empty space.
             $result[] = new Entity($con, $row); 
         }
         
