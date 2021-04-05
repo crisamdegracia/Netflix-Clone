@@ -358,7 +358,6 @@ f5v56 - Showing all Categories
 ----------------------------------------------------------------------------
 f5v57 - Creating entity provider class | EntityProvider.php
 
-
 1. nag create tayo ng method,
     public static function getEntities($con, $categoryId, $limit)
 2. sinet natin ung value sa CategoryContainers.php 
@@ -368,7 +367,36 @@ f5v57 - Creating entity provider class | EntityProvider.php
         // kasi baka daw mag kaproblema when binding integers
         $query->bindValue(":limit", $limit, PDO::PARAM_INT);
 5. nag create ng  private function getRandomEntity() sa PreviewProvider.php
-    - 
+----------------------------------------------------------------------------
+f5v58 - sa CategoryContainers.php 
+    - pinag eeplain ko nalang sa mga comments kasi magulo na ung code.
+    - pero i still can read ung mga nangyayare. good job!
+----------------------------------------------------------------------------
+f5v59 - entity Preview - napalabas na ung mga thumbnails.
+1. 1st nag create sa PreviewProvider.php
+     createEntityPreviewSquare($entity)
+2. tapos kinall sya sa CategoryContainers.php sa forEach() 
+    - ung $entity is merong ng mga value yon na
+    - until macomplete ung mga calls, ang pinaka main function na nag call 
+    - sakanila is ung showAllCategories().
+    - at finally napalabas na ung mga thumbnails.
+----------------------------------------------------------------------------
+f5v60 - 61 - Styling the enity previews. 
+----------------------------------------------------------------------------
+f6v62 - Creating the entity page - 
+1. entity.php - kinuha lang ung $_GET['id'], para hindi na nag rarandom ung preview video
+----------------------------------------------------------------------------
+f6v63 - Error Message Class - 
+1. class ErrorMessage {
+
+    public static function show($text) {
+        exit("<span class='errorBanner'>$text</span>");
+    }
+
+}
+2.  ErrorMessage::show("No ID passed into page.");
+----------------------------------------------------------------------------
+f6v64 - Creating season provider
 
 
 
@@ -377,3 +405,5 @@ f5v57 - Creating entity provider class | EntityProvider.php
                             <button onclick='watchVideo($videoId)'><i class='fas fa-play'></i> $playButtonText</button>
                             <button onclick='volumeToggle(this)'><i class='fas fa-volume-mute'></i></button>
                         </div>
+
+                    

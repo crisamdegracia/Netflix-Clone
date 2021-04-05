@@ -9,6 +9,8 @@ class CategoryContainers {
         $this->username = $username;
     }
 
+
+    //Eto ung pinaka tatawag sa mga thumbnails. 
 	public function showAllCategories() {
         $query = $this->con->prepare("SELECT * FROM categories");
         $query->execute();
@@ -22,7 +24,10 @@ class CategoryContainers {
             // Basic - dapat alam ko na un dba.
             // 1st arg, the data, 2nd Title, 3rd TvShow, 4th Movies 
             $html .= $this->getCategoryHtml($row, null, true, true);
-		echo $row['name'];
+
+
+
+		    // echo $row['name'];
 		}
 
         return $html . "</div>";
@@ -38,7 +43,9 @@ class CategoryContainers {
 
         if ($tvShows && $movies) {
             //ung 30 dito is ung limit, na naka set sa EntityProvider.php
+            //this $entity is meron ng list of New Entity na nasa array[]
             $entities = EntityProvider::getEntities($this->con, $categoryId, 30);
+            
         } 
         // else if ($tvShows) {
         //     $entities = EntityProvider::getTVShowEntities($this->con, $categoryId, 30);
@@ -53,10 +60,22 @@ class CategoryContainers {
 
         $entitiesHtml = "";
         $previewProvider = new PreviewProvider($this->con, $this->username);
-        // foreach ($entities as $entity) {
-        //     $entitiesHtml .= $previewProvider->createEntityPreviewSquare($entity);
-        // }
 
+        //$ung value na ng $entity dito is a list of array[] kaya we can pass it to
+        //  - the new PreviewProvider->createEntityPreviewSquare($entity)
+        // 
+        foreach ($entities as $entity) {
+            
+            //bali ang magiging value neto is with HTML na. ung mga squares na.
+            //so marami na sila. 
+            $entitiesHtml .= $previewProvider->createEntityPreviewSquare($entity);
+            // after each loop -  is marereturn na dun sa showAllCategories
+            // 
+
+            // $entitiesHtml .= $entity->getName();
+        }
+
+        //eto ung cateogory title, and mga thumbnails.
         return "<div class='category'>
                     <a href='category.php?id=$categoryId'>
                         <h3>$title</h3>
